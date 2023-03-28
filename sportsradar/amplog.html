@@ -28,6 +28,25 @@
     <div id="post-consent-ui">
       <button on="tap:truendo.prompt()">Update Consent</button>
     </div>
+    <amp-consent  exposes="tcfapi" id="truendo" layout="nodisplay">
+        <script type="application/json">
+          {
+            "consentInstanceId": "truendo",
+            "consentRequired": true,
+            "promptUISrc": "https://amp.priv.center/amp.html?tru-type=amp&site-id=aa006af7-3ad5-41b2-be91-054e62d0fad8"
+            }
+      </script>
+      </amp-consent>
+      <script>
+        window.addEventListener(
+          "message",
+            (event) => {
+            if(event.data.type === 'consent-response'){
+              console.log(event.data)
+            }
+          },
+        );
+      </script>
   </body>
 
 </html>
