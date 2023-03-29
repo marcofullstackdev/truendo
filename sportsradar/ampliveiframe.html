@@ -1,0 +1,115 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+  <!-- TRUENDO Privacy Center -->
+    <script async>
+      /*read the query params in the url*/
+      let params = new URLSearchParams(window.location.search);
+      console.log(params)
+      let trutype = params.get("tru-type"); 
+      let siteid = params.get("site-id"); 
+      console.log(trutype, siteid)
+      /**/
+      var s = document.createElement("script"); s.async = !0; 
+      s.id = "truendoAutoBlock"; s.type = "text/javascript";
+      s.src = "https://cdn.priv.center/pc/truendo_cmp.pid.js";
+      s.dataset.trutype =`${trutype}`;
+      s.dataset.siteid =`${siteid}`; 
+      document.querySelector("head").prepend(s);
+    </script>
+  <!-- End TRUENDO Privacy Center -->
+
+  <script>
+
+    window.addEventListener('TruendoEvent', function (ev) {
+      /*console.log("TruendoEvent", ev);*/
+    })
+
+    window.addEventListener('TruendoCookieControl', function (e) {
+      /*console.log("cookiecontrol", e);*/
+    })
+
+    let tcf =''
+    let gdpr = true
+
+    window.TruendoEventCallback = (ev) => {
+
+      if (!ev.name) {
+        return;
+      }
+
+      if(ev.name === 'tru_tc_string'){
+        /*console.log(`tcf event \n tcfstring:${ev.params.tcf} \n gdpr-applies: ${ev.params.gdpr}`)*/
+        tcf = ev.params.tcf
+        gdpr = ev.params.gdpr
+      }
+
+
+
+      if (ev.name === 'tru_panel_open'){
+        var fullscreenObject = {
+          type: "consent-ui",
+          action: "enter-fullscreen"
+        };
+        parent.postMessage(fullscreenObject, "*");
+      }
+
+      if (ev.name === 'tru_panel_close' || ev.name === 'tru_save_callback' || ev.name === 'tru_accept_all_click' || ev.name === 'tru_save_preferences_click' || ev.name === 'tru_necessary_click'){
+        /*const ins = `{
+            'clientConfig': '*',
+            'consentStateValue': 'accepted',
+            'consentString': ${tcf},
+            }`
+            console.log(ins)
+            */
+        parent.postMessage({
+          type: "consent-response",
+          action: "accept",
+          info:`{
+            'clientConfig': '*',
+            'consentStateValue': 'accepted',
+            'consentString': ${tcf},
+            }`,
+          consentMetadata:{
+            "consentStringType": 2,
+            "gdprApplies": gdpr,
+           },
+        }, "*");  
+      }
+
+      if (ev.name === 'tru_loaded'){
+        /*console.log('page loaded')*/
+        function getWidth() {
+          var iframeWidth = window.innerWidth;
+          if (iframeWidth < 700) {
+              window.parent.postMessage({
+              type: 'consent-ui',
+              action: 'ready',
+              initialHeight: '60vh',
+            }, '*');
+          } else {
+            window.parent.postMessage({
+              type: 'consent-ui',
+              action: 'ready',
+              initialHeight: '30vh',
+            }, '*');
+            /*console.log('after post message')*/
+          }
+        }
+        window.addEventListener('resize', function (e) {
+        getWidth();
+        })
+        getWidth();
+      }
+    }
+
+
+  </script>
+  <style>
+  </style>
+  </head>
+  <body>
+  </body>
+</html>
+
