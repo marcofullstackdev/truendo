@@ -63,6 +63,8 @@
             }`
             console.log(ins)
             */
+
+            if(tcf){
         parent.postMessage({
           type: "consent-response",
           action: "accept",
@@ -76,6 +78,7 @@
             "gdprApplies": gdpr,
            },
         }, "*");  
+      }
       }
 
       if (ev.name === 'tru_loaded'){
