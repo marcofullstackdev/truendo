@@ -50,6 +50,28 @@
       };
 
       fetchData2();
+
+      const fetchDataPut = async () => {
+        try {
+          const response = await fetch(
+            "https://testcdn.priv.center/ampapitest/invalidate.html",
+            {
+              method: "PUT",
+              mode: "no-cors",
+              headers: {
+                "Content-type":
+                  "application/x-www-form-urlencoded; charset=UTF-8",
+              },
+              body: "foo=bar&lorem=ipsum",
+            }
+          );
+          console.log(response);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+
+      fetchDataPut();
     </script>
   </body>
 </html>
