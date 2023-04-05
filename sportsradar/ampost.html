@@ -8,7 +8,6 @@
   </head>
   <body>
     <script>
-      const fetchData = () => {
         fetch('https://testcdn.priv.center/ampapitest/invalidate.html', {
           method: "POST",
           headers: {
@@ -23,8 +22,6 @@
           .catch((err) => {
             console.log("Error message: ", error);
           });
-      };
-      fetchData();
     </script>
   </body>
 </html>
