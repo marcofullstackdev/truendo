@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>make a post request to cloudfront</h1>
+    <script>
+      const fetchData = async () => {
+        try {
+          const response = await fetch(
+            "http://local.decid.io/consent/public/amp/updateConsent",
+            {
+              method: "POST",
+              mode: "no-cors",
+              headers: {
+                "Content-type":
+                  "application/json",
+              },
+              body: {
+                consentInstanceId: "truendo",
+                ampUserId: "32661671",
+                consentStateValue: "accepted",
+              },
+            }
+          );
+          console.log(response);
+          console.log("we have a response");
+        } catch (error) {
+          console.log(error);
+          console.log("there might have been an error");
+        }
+      };
+
+      fetchData();
+    </script>
+  </body>
+</html>
