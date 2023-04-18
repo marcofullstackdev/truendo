@@ -29,13 +29,13 @@
       <button on="tap:truendo.prompt()">Update Consent</button>
     </div>
     <amp-consent id="truendo" layout="nodisplay">
-        <script type="application/json">
-          {
-            "consentInstanceId": "truendo",
-            "consentRequired": "remote",
-            "checkConsentHref": "https://prod-fra.truendo.com/consent/public/amp/check", 
-            "promptUISrc": "https://amp.priv.center/amp.html?tru-type=amp&site-id=69537836-be3d-4d7a-8b38-fc0d53389106"
-          }
+        <script type="application/json">{
+          "consentInstanceId": "truendo",
+          "consentRequired": "remote",
+          "checkConsentHref": "https://prod-fra.truendo.com/consent/public/amp/check",
+          "promptUISrc": "https://amp.priv.center/amp.html?tru-type=amp&site-id=69537836-be3d-4d7a-8b38-fc0d53389106",
+          "postPromptUI": "post-consent-ui"
+        }
       </script>
       </amp-consent>
       <script>
@@ -51,3 +51,7 @@
   </body>
 
 </html>
+
+
+
+
